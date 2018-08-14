@@ -13,8 +13,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.wq.photo.util.StatusBarCompat;
 import com.wq.photo.widget.PickConfig;
 import com.yalantis.ucrop.UCrop;
+import com.yanzhenjie.permission.AndPermission;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,7 +46,7 @@ import java.util.Set;
  * 1. 选择模式 chose_mode  0  //单选 1多选
  * 2. 选择张数 max_chose_count  多选模式默认 9 张
  */
-public class MediaChoseActivity extends ActionBarActivity {
+public class MediaChoseActivity extends AppCompatActivity {
 
     public int max_chose_count = 1;
     public LinkedHashMap imasgemap = new LinkedHashMap();
@@ -66,6 +67,8 @@ public class MediaChoseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_chose);
         Toolbar toobar = (Toolbar) findViewById(R.id.toobar);
+        toobar.setTitleTextColor(Color.WHITE);
+        toobar.setNavigationIcon(R.drawable.ucrop_ic_cross);
         setSupportActionBar(toobar);
 
         FragmentTransaction fragmentTransaction =
@@ -96,10 +99,10 @@ public class MediaChoseActivity extends ActionBarActivity {
         fragmentTransaction.add(R.id.container, photoGalleryFragment, PhotoGalleryFragment.class.getSimpleName());
         fragmentTransaction.commit();
         if (savedInstanceState != null) {
-            int chosemode=savedInstanceState.getInt("chosemode");
-            if (chosemode == PickConfig.MODE_SINGLE_PICK){
+            int chosemode = savedInstanceState.getInt("chosemode");
+            if (chosemode == PickConfig.MODE_SINGLE_PICK) {
                 currentfile = new File(savedInstanceState.getString("ImageFilePath"));
-                boolean isneedCrop=savedInstanceState.getBoolean("isneedCrop");
+                boolean isneedCrop = savedInstanceState.getBoolean("isneedCrop");
                 if (isneedCrop && !isCropOver) {
                     sendStarCrop(currentfile.getAbsolutePath());
                 } else {
@@ -111,7 +114,7 @@ public class MediaChoseActivity extends ActionBarActivity {
                     finish();
                 }
                 insertImage(currentfile.getAbsolutePath());
-            }else {
+            } else {
                 getImageChoseMap().put(currentfile.getAbsolutePath(), currentfile.getAbsolutePath());
                 invalidateOptionsMenu();
                 insertImage(currentfile.getAbsolutePath());
@@ -337,13 +340,17 @@ public class MediaChoseActivity extends ActionBarActivity {
 
     public void sendStarCamera() {
         currentfile = getTempFile();
+
+        Uri compatUri = AndPermission.getFileUri(this, currentfile);
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentfile));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, compatUri);
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
 
     public void sendStarCrop(String path) {
+
         UCrop uCrop = UCrop.of(Uri.fromFile(new File(path)), Uri.fromFile(new File(getCropFile().getAbsolutePath())));
         if (isSquareCrop) {
             uCrop = uCrop.withAspectRatio(1, 1);
@@ -384,6 +391,7 @@ public class MediaChoseActivity extends ActionBarActivity {
 
     /**
      * 临时缓存目录
+     *
      * @return
      */
     public String getCacheFile() {
@@ -400,8 +408,8 @@ public class MediaChoseActivity extends ActionBarActivity {
         super.onSaveInstanceState(outState);
         if (currentfile != null && currentfile.exists()) {
             outState.putString("ImageFilePath", currentfile.getAbsolutePath());
-            outState.putInt("chosemode",chosemode);
-            outState.putBoolean("isneedCrop",isneedCrop);
+            outState.putInt("chosemode", chosemode);
+            outState.putBoolean("isneedCrop", isneedCrop);
         }
     }
 

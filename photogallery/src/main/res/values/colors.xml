@@ -19,4 +19,8 @@
     <color name="ucrop_color_default_crop_frame">#ffffff</color>
     <color name="ucrop_color_default_dimmed">#8c000000</color>
 
+    <color name="colorMainEE">#e0f08300</color>
+    <color name="colorMain">#f08300</color>
+
+
 </resources>

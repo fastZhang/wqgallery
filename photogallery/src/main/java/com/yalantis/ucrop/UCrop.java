@@ -16,7 +16,8 @@ import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.appcompat.BuildConfig;
+
+import com.wq.photo.BuildConfig;
 
 import java.io.Serializable;
 

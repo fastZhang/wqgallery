@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 
-public class CropImageActivity extends ActionBarActivity {
+public class CropImageActivity extends AppCompatActivity {
     private String filePath;
     private String outFilePath;
 

@@ -43,7 +43,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
 
 
     public int max_chose_count = 9;
-    private int spancount=3;
+    private int spancount = 3;
     public boolean isNeedfcamera = false;
     View rootview;
     RecyclerView my_recycler_view;
@@ -78,13 +78,17 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
     FloderAdapter floderAdapter;
 
     private void initFloderPop() {
-        if(getActivity() == null){return;}
-        if(getActivity().isFinishing()){return;}
+        if (getActivity() == null) {
+            return;
+        }
+        if (getActivity().isFinishing()) {
+            return;
+        }
         popupWindow = new ListPopupWindow(getActivity());
         ImageFloder allimgslist = new ImageFloder();
-        allimgslist.setDir("/所有图片");
+        allimgslist.setDir("/" + getString(R.string.pic_all));
         allimgslist.setCount(imageses.size());
-        if(imageses.size()>0){
+        if (imageses.size() > 0) {
             allimgslist.setFirstImagePath(imageses.get(0));
         }
         mImageFloders.add(0, allimgslist);
@@ -101,16 +105,16 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageFloder floder = (ImageFloder) parent.getAdapter().getItem(position);
                 floderAdapter.setCheck(position);
-                if (floder.getName().equals("/所有图片")) {
+                if (floder.getName().equals("/" + getString(R.string.pic_all))) {
                     currentimageses.clear();
                     currentimageses.addAll(imageses);
-                    adapter = new PhotoAdapter(getActivity(), currentimageses,spancount, chose_mode);
+                    adapter = new PhotoAdapter(getActivity(), currentimageses, spancount, chose_mode);
                     adapter.setmax_chose_count(max_chose_count);
                     adapter.setDir("");
                     adapter.setNeedCamera(isNeedfcamera);
                     my_recycler_view.setAdapter(adapter);
                     popupWindow.dismiss();
-                    open_gallery.setText("所有图片");
+                    open_gallery.setText(getString(R.string.pic_all));
                 } else {
                     File mImgDir = new File(floder.getDir());
                     List<String> ims =
@@ -129,7 +133,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
                     /**
                      * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
                      */
-                    adapter = new PhotoAdapter(getActivity(), currentimageses,spancount, chose_mode);
+                    adapter = new PhotoAdapter(getActivity(), currentimageses, spancount, chose_mode);
                     adapter.setmax_chose_count(max_chose_count);
                     adapter.setDir(floder.getDir());
                     adapter.setNeedCamera(false);
@@ -141,7 +145,9 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
         });
 
     }
-    int chose_mode=1;
+
+    int chose_mode = 1;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -152,15 +158,17 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
         PhotoGalleryFragment fragment = new PhotoGalleryFragment();
         return fragment;
     }
+
     /**
      * 当拍照之后刷新出来拍照的那张照片
+     *
      * @param path
      */
     public void addCaptureFile(final String path) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (new File(path)!=null && new File(path).exists() && new File(path).length() >10){
+                if (new File(path) != null && new File(path).exists() && new File(path).length() > 10) {
                     currentimageses.add(0, path);
                     imageses.add(0, path);
                     adapter.notifyDataSetChanged();
@@ -190,7 +198,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
             open_gallery.setEnabled(false);
         }
         if (adapter == null) {
-            adapter = new PhotoAdapter(getActivity(), currentimageses, spancount,chose_mode);
+            adapter = new PhotoAdapter(getActivity(), currentimageses, spancount, chose_mode);
             adapter.setDir("");
             adapter.setNeedCamera(isNeedfcamera);
             adapter.setmax_chose_count(max_chose_count);
@@ -200,7 +208,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spancount);
         my_recycler_view.setLayoutManager(layoutManager);
         my_recycler_view.setAdapter(adapter);
-        open_gallery.setText("所有图片");
+        open_gallery.setText(getString(R.string.pic_all));
         loadAllImages();
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,7 +299,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
                                 MediaStore.Images.Media.MIME_TYPE + "=? or " +
                                 MediaStore.Images.Media.MIME_TYPE + "=? or " +
                                 MediaStore.Images.Media.MIME_TYPE + "=?",
-                        new String[]{"image/jpeg", "image/png","image/jpg","image/gif"},
+                        new String[]{"image/jpeg", "image/png", "image/jpg", "image/gif"},
                         MediaStore.Images.Media.DATE_MODIFIED);
                 Log.e("TAG", mCursor.getCount() + "");
                 while (mCursor.moveToNext()) {
@@ -303,12 +311,12 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
                         firstImage = path;
                     // 获取该图片的父路径名
                     File parentFile = new File(path);
-                    if (parentFile == null )
+                    if (parentFile == null)
                         continue;
                     String dirPath = parentFile.getParentFile().getAbsolutePath();
                     ImageFloder imageFloder = null;
-                    File file=new File(dirPath);
-                    if(file!=null&&file.isDirectory()&&file.list().length>0){
+                    File file = new File(dirPath);
+                    if (file != null && file.isDirectory() && file.list().length > 0) {
                         // 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
                         if (mDirPaths.contains(dirPath)) {
                             continue;
@@ -353,12 +361,12 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Bundle bundle=getArguments();
-        if (bundle == null)return;
+        Bundle bundle = getArguments();
+        if (bundle == null) return;
         chose_mode = bundle.getInt(PickConfig.EXTRA_PICK_MODE);
         max_chose_count = bundle.getInt(PickConfig.EXTRA_MAX_SIZE);
-        spancount =bundle.getInt(PickConfig.EXTRA_SPAN_COUNT);
-        isNeedfcamera= bundle.getBoolean(PickConfig.EXTRA_IS_NEED_CAMERA);
+        spancount = bundle.getInt(PickConfig.EXTRA_SPAN_COUNT);
+        isNeedfcamera = bundle.getBoolean(PickConfig.EXTRA_IS_NEED_CAMERA);
     }
 
 
