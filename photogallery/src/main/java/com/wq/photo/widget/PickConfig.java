@@ -9,6 +9,10 @@ import android.os.Bundle;
 import com.wq.photo.MediaChoseActivity;
 import com.yalantis.ucrop.UCrop;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  */
@@ -35,12 +39,15 @@ public class PickConfig {
     public final static String EXTRA_ACTION_BAR_COLOR = "extra_actionbar_color";
     public final static String EXTRA_STATUS_BAR_COLOR = "extra_status_bar_color";
 
+    public final static String EXTRA_IMAGES_PATH_ASSETS = "extra_images_path_assets";
+
 
     private int spanCount;
     private int pickMode;
     private int maxPickSize;
     private boolean isneedcrop;
     private boolean isneedcamera;
+    private ArrayList<String> imageses;
     private int actionBarcolor;
     private int statusBarcolor;
     private UCrop.Options options;
@@ -52,22 +59,28 @@ public class PickConfig {
         this.maxPickSize = builder.maxPickSize;
         this.isneedcrop = builder.isneed_crop;
         this.isneedcamera = builder.isneed_camera;
+
+        this.imageses = builder.imageses;
+
         this.statusBarcolor = builder.statusBarcolor;
         this.actionBarcolor = builder.actionBarcolor;
-        this.options=builder.options;
-        this.isSqureCrop=builder.isSqureCrop;
+        this.options = builder.options;
+        this.isSqureCrop = builder.isSqureCrop;
 
 
         Bundle bundle = new Bundle();
         bundle.putInt(EXTRA_STATUS_BAR_COLOR, this.statusBarcolor);
         bundle.putInt(EXTRA_ACTION_BAR_COLOR, this.actionBarcolor);
         bundle.putInt(EXTRA_SPAN_COUNT, this.spanCount);
-        bundle.putParcelable(EXTRA_UCROP_OPTIONS,this.options);
+        bundle.putParcelable(EXTRA_UCROP_OPTIONS, this.options);
         bundle.putInt(EXTRA_PICK_MODE, this.pickMode);
         bundle.putInt(EXTRA_MAX_SIZE, this.maxPickSize);
         bundle.putBoolean(EXTRA_IS_NEED_CAMERA, this.isneedcamera);
+
+        bundle.putStringArrayList(EXTRA_IMAGES_PATH_ASSETS, this.imageses);
+
         bundle.putBoolean(EXTRA_IS_NEED_CROP, this.isneedcrop);
-        bundle.putBoolean(EXTRA_IS_SQUARE_CROP,this.isSqureCrop);
+        bundle.putBoolean(EXTRA_IS_SQUARE_CROP, this.isSqureCrop);
 
         if (this.pickMode == MODE_MULTIP_PICK) {
             this.isneedcrop = false;
@@ -93,14 +106,12 @@ public class PickConfig {
         private int maxPickSize = DEFAULT_PICKSIZE;
         private boolean isneed_crop = false;
         private boolean isneed_camera = true;
-        private boolean isSqureCrop=false;
+        private ArrayList<String> imageses;
+        private boolean isSqureCrop = false;
         private int actionBarcolor = Color.parseColor("#03A9F4");
         private int statusBarcolor = Color.parseColor("#0288D1");
 
-        private UCrop.Options options=null;
-
-
-
+        private UCrop.Options options = null;
 
 
         public Builder(Activity context) {
@@ -169,13 +180,16 @@ public class PickConfig {
             return this;
         }
 
+        public PickConfig.Builder setImagesPathFromAssets(ArrayList<String> imageses) {
+            this.imageses = imageses;
+            return this;
+        }
+
 
         public PickConfig build() {
             return new PickConfig(context, this);
         }
     }
-
-
 
 
 }

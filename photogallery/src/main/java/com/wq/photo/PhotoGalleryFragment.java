@@ -2,6 +2,7 @@ package com.wq.photo;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -64,12 +65,15 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
      */
     private List<ImageFloder> mImageFloders = new ArrayList<ImageFloder>();
 
+    private int handleTAG0 = 0, handleTAG1 = 1;
+
     @Override
     public boolean handleMessage(Message msg) {
-        if (msg.what == 1) {
+        if (msg.what == handleTAG1) {
             initFloderPop();
-        } else {
-            adapter.notifyDataSetChanged();
+        } else if (msg.what == handleTAG0) {
+            if (null != adapter)
+                adapter.notifyDataSetChanged();
         }
         return false;
     }
@@ -209,7 +213,14 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
         my_recycler_view.setLayoutManager(layoutManager);
         my_recycler_view.setAdapter(adapter);
         open_gallery.setText(getString(R.string.pic_all));
-        loadAllImages();
+
+        //外界传递路径不要扫描了
+        if (currentimageses == null)
+            loadAllImages();
+        else {
+            (rootview.findViewById(R.id.ll_floder)).setVisibility(View.GONE);
+        }
+
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,12 +280,13 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
                         imageses.add(photopath);
                     }
                 }
+
                 if (cursor != null) {
                     cursor.close();
                 }
                 currentimageses.clear();
                 currentimageses.addAll(imageses);
-                handler.sendEmptyMessage(0);
+                handler.sendEmptyMessage(handleTAG0);
                 getImages();
             }
         }).start();
@@ -351,7 +363,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
                 // 扫描完成，辅助的HashSet也就可以释放内存了
                 mDirPaths = null;
                 // 通知Handler扫描图片完成
-                handler.sendEmptyMessage(1);
+                handler.sendEmptyMessage(handleTAG1);
 
             }
         }).start();
@@ -359,7 +371,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
 
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         Bundle bundle = getArguments();
         if (bundle == null) return;
@@ -367,6 +379,10 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
         max_chose_count = bundle.getInt(PickConfig.EXTRA_MAX_SIZE);
         spancount = bundle.getInt(PickConfig.EXTRA_SPAN_COUNT);
         isNeedfcamera = bundle.getBoolean(PickConfig.EXTRA_IS_NEED_CAMERA);
+        isNeedfcamera = bundle.getBoolean(PickConfig.EXTRA_IS_NEED_CAMERA);
+
+        currentimageses = bundle.getStringArrayList(PickConfig.EXTRA_IMAGES_PATH_ASSETS);
+
     }
 
 

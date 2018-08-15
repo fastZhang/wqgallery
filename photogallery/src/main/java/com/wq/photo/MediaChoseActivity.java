@@ -62,6 +62,8 @@ public class MediaChoseActivity extends AppCompatActivity {
     private boolean isSquareCrop;
     private UCrop.Options options = null;
 
+    private final String ImageFilePath = "ImageFilePath";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +73,7 @@ public class MediaChoseActivity extends AppCompatActivity {
         toobar.setNavigationIcon(R.drawable.ucrop_ic_cross);
         setSupportActionBar(toobar);
 
-        FragmentTransaction fragmentTransaction =
-                getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = getIntent().getBundleExtra(PickConfig.EXTRA_PICK_BUNDLE);
         statusBarcolor = bundle.getInt(PickConfig.EXTRA_STATUS_BAR_COLOR);
         actionBarcolor = bundle.getInt(PickConfig.EXTRA_ACTION_BAR_COLOR);
@@ -101,7 +102,7 @@ public class MediaChoseActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             int chosemode = savedInstanceState.getInt("chosemode");
             if (chosemode == PickConfig.MODE_SINGLE_PICK) {
-                currentfile = new File(savedInstanceState.getString("ImageFilePath"));
+                currentfile = new File(savedInstanceState.getString(ImageFilePath)); //恢复相机的缓存
                 boolean isneedCrop = savedInstanceState.getBoolean("isneedCrop");
                 if (isneedCrop && !isCropOver) {
                     sendStarCrop(currentfile.getAbsolutePath());
@@ -336,6 +337,9 @@ public class MediaChoseActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_CAMERA = 2001;
     public static final int REQUEST_CODE_CROP = 2002;
+    /**
+     * Camera的相册
+     */
     File currentfile;
 
     public void sendStarCamera() {
@@ -407,7 +411,7 @@ public class MediaChoseActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (currentfile != null && currentfile.exists()) {
-            outState.putString("ImageFilePath", currentfile.getAbsolutePath());
+            outState.putString(ImageFilePath, currentfile.getAbsolutePath());
             outState.putInt("chosemode", chosemode);
             outState.putBoolean("isneedCrop", isneedCrop);
         }
