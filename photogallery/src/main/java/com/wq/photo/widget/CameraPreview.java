@@ -41,10 +41,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public Camera getCameraInstance() {
         try {
 
-           int n=  Camera.getNumberOfCameras();
-            if(n>0){
-                mCamera=Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-            }else{
+            int n = Camera.getNumberOfCameras();
+            if (n > 0) {
+                mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+            } else {
                 mCamera = Camera.open(); // attempt to get a Camera instance
             }
             Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -54,7 +54,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 mCamera.setDisplayOrientation(180);
             }
         } catch (Exception e) {
-            Log.e(TAG, "摄像头不可用");
+            Log.e(TAG, "camera error");
             // Camera is not available (in use or does not exist)
         }
         return mCamera; // returns null if camera is unavailable
@@ -81,8 +81,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             Log.d(TAG, "surfaceChanged");
             if (checkCameraHardware(getContext())) {
                 mCamera = getCameraInstance();
-                if(mCamera==null){
-                    mCamera=Camera.open();
+                if (mCamera == null) {
+                    mCamera = Camera.open();
                 }
                 Camera.Parameters parameters = mCamera.getParameters();
                 List<Camera.Size> sizes = parameters.getSupportedPreviewSizes();

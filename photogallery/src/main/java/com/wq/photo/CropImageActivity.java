@@ -47,7 +47,7 @@ public class CropImageActivity extends AppCompatActivity {
         cropImageView.setGuidelines(1);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("裁剪图片");
+            getSupportActionBar().setTitle(getString(R.string.ucrop_menu_crop));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -57,14 +57,13 @@ public class CropImageActivity extends AppCompatActivity {
             outFilePath = getIntent().getStringExtra(MediaStore.EXTRA_OUTPUT);
         }
         try {
-            Log.i("path", "剪裁图片路径" + filePath);
             if (new File(filePath) != null && new File(filePath).exists()) {
                 cropImage();
             } else {
-                Toast.makeText(this, "文件不存在", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "no file", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -94,24 +93,24 @@ public class CropImageActivity extends AppCompatActivity {
     private void cropImage() {
 
 
-        Bitmap bitmap=null;
-        BitmapFactory.Options opts=new BitmapFactory.Options();
+        Bitmap bitmap = null;
+        BitmapFactory.Options opts = new BitmapFactory.Options();
         try {
-            opts.inJustDecodeBounds=true;
+            opts.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(filePath, opts);
-            int nw=opts.outWidth;
-            int nh=opts.outHeight;
-            opts.inJustDecodeBounds=false;
-            if (nw > 1920){
+            int nw = opts.outWidth;
+            int nh = opts.outHeight;
+            opts.inJustDecodeBounds = false;
+            if (nw > 1920) {
 //                opts.outHeight=1920;
 //                opts.outWidth=nw*1920/nh;
-                opts.inSampleSize=2;
+                opts.inSampleSize = 2;
             }
-             bitmap =  BitmapFactory.decodeFile(filePath, opts);
-        }catch (Exception e){
+            bitmap = BitmapFactory.decodeFile(filePath, opts);
+        } catch (Exception e) {
             e.printStackTrace();
-            opts.inJustDecodeBounds=false;
-            opts.inSampleSize=2;
+            opts.inJustDecodeBounds = false;
+            opts.inSampleSize = 2;
             bitmap = BitmapFactory.decodeFile(filePath, opts);
         }
         cropImageView.setImageBitmap(bitmap);

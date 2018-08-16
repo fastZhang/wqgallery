@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|left"
             android:layout_marginTop="6dp"
-            android:text="0张"
+            android:text="0"
             android:textColor="#aaa"
             android:textSize="14sp" />
     </LinearLayout>

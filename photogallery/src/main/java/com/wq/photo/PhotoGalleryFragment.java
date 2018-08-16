@@ -257,9 +257,8 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
     }
 
     public void loadAllImages() {
-        if (!Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(getActivity(), "暂无外部存储", Toast.LENGTH_SHORT).show();
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            Toast.makeText(getActivity(), "no sdcard", Toast.LENGTH_SHORT).show();
             return;
         }
         new Thread(new Runnable() {

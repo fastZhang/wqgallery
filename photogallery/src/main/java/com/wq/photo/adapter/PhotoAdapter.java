@@ -121,7 +121,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             ivholder.checkBox.setSelected(false);
                         } else {
                             if (hashmap.size() >= max_chose_count) {
-                                Toast.makeText(context, "你最多只能选择" + max_chose_count + "张照片", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, context.getString(R.string.most_choose) + max_chose_count + context.getString(R.string.pics), Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             hashmap.put(images, images);
@@ -166,7 +166,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         if (getCHoseImages().size() < max_chose_count) {
                             ((MediaChoseActivity) context).sendStarCamera();
                         } else {
-                            Toast.makeText(context, "你最多只能选择" + max_chose_count + "张照片", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, context.getString(R.string.most_choose) + max_chose_count + context.getString(R.string.pics), Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         if (getCHoseImages().size() > 0) {
@@ -213,8 +213,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public String getItem(int postion) {
         int realPos = postion;
-        if (isNeedCamera){
-            realPos = postion -1;
+        if (isNeedCamera) {
+            realPos = postion - 1;
         }
         if (realPos >= imageses.size()) return "";
         return imageses.get(realPos);

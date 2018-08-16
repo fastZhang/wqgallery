@@ -181,9 +181,9 @@ public class MediaChoseActivity extends AppCompatActivity {
             menu.findItem(R.id.menu_photo_count).setEnabled(true);
             menu.findItem(R.id.menu_photo_count).setVisible(true);
             if (chosemode == PickConfig.MODE_MULTIP_PICK) {
-                menu.findItem(R.id.menu_photo_count).setTitle("发送(" + imasgemap.size() + "/" + max_chose_count + ")");
+                menu.findItem(R.id.menu_photo_count).setTitle(getString(R.string.mut_sel) + "(" + imasgemap.size() + "/" + max_chose_count + ")");
             } else {
-                menu.findItem(R.id.menu_photo_count).setTitle("发送(1)");
+                menu.findItem(R.id.menu_photo_count).setTitle(getString(R.string.mut_sel) + "(1)");
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -248,7 +248,7 @@ public class MediaChoseActivity extends AppCompatActivity {
             Iterator iterator = imasgemap.keySet().iterator();
             File file = new File(iterator.next().toString());
             if (!file.exists()) {
-                Toast.makeText(this, "获取文件失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.get_file_failed), Toast.LENGTH_SHORT).show();
             }
             sendStarCrop(file.getAbsolutePath());
         } else {
@@ -280,7 +280,7 @@ public class MediaChoseActivity extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
                 finish();
             } else {
-                Toast.makeText(this, "截取图片失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.get_file_failed), Toast.LENGTH_SHORT).show();
             }
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_CAMERA && (chosemode == PickConfig.MODE_SINGLE_PICK)) {
             if (currentfile != null && currentfile.exists() && currentfile.length() > 10) {
@@ -296,7 +296,7 @@ public class MediaChoseActivity extends AppCompatActivity {
                     finish();
                 }
             } else {
-                Toast.makeText(MediaChoseActivity.this, "获取图片失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MediaChoseActivity.this, getString(R.string.get_file_failed), Toast.LENGTH_SHORT).show();
             }
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_CAMERA && (chosemode == PickConfig.MODE_MULTIP_PICK)) {
 
@@ -305,7 +305,7 @@ public class MediaChoseActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
                 insertImage(currentfile.getAbsolutePath());
             } else {
-                Toast.makeText(MediaChoseActivity.this, "获取图片失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MediaChoseActivity.this, getString(R.string.get_file_failed), Toast.LENGTH_SHORT).show();
             }
         }
     }
