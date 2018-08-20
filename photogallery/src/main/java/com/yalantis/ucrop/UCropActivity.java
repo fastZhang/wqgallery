@@ -147,6 +147,7 @@ public class UCropActivity extends AppCompatActivity {
                 mGestureCropImageView.setImageUri(inputUri);
             } catch (Exception e) {
                 setResultException(e);
+                e.printStackTrace();
                 finish();
             }
         } else {
