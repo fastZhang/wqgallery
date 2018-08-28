@@ -53,7 +53,6 @@ public class BitmapLoadUtils {
         ExifInterface exif = getExif(uri);
         if (exif != null) {
             int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            // TODO Should not rotate bitmap but initially apply needed angle to the matrix
             return rotateBitmap(decodeSampledBitmap, exifToDegrees(exifOrientation));
         } else {
             return decodeSampledBitmap;
