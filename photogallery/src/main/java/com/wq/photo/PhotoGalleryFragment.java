@@ -53,7 +53,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
     PhotoAdapter adapter;
     ArrayList<String> imageses = new ArrayList<>();
 
-    List<String> currentimageses = new ArrayList<>();
+    List<String> currentimageses;
     Handler handler;
     /**
      * 临时的辅助类，用于防止同一个文件夹的多次扫描
@@ -201,6 +201,15 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
             clear = (ImageView) rootview.findViewById(R.id.clear);
             open_gallery.setEnabled(false);
         }
+
+        //外界传递路径不要扫描了
+        if (currentimageses == null) {
+            currentimageses = new ArrayList<>();
+            loadAllImages();
+        } else {
+            (rootview.findViewById(R.id.ll_floder)).setVisibility(View.GONE);
+        }
+
         if (adapter == null) {
             adapter = new PhotoAdapter(getActivity(), currentimageses, spancount, chose_mode);
             adapter.setDir("");
@@ -214,12 +223,7 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
         my_recycler_view.setAdapter(adapter);
         open_gallery.setText(getString(R.string.pic_all));
 
-        //外界传递路径不要扫描了
-        if (currentimageses == null)
-            loadAllImages();
-        else {
-            (rootview.findViewById(R.id.ll_floder)).setVisibility(View.GONE);
-        }
+
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -380,7 +384,9 @@ public class PhotoGalleryFragment extends Fragment implements android.os.Handler
         isNeedfcamera = bundle.getBoolean(PickConfig.EXTRA_IS_NEED_CAMERA);
         isNeedfcamera = bundle.getBoolean(PickConfig.EXTRA_IS_NEED_CAMERA);
 
-        currentimageses = bundle.getStringArrayList(PickConfig.EXTRA_IMAGES_PATH_ASSETS);
+        if (null != bundle.getStringArrayList(PickConfig.EXTRA_IMAGES_PATH_ASSETS)) {
+            currentimageses = bundle.getStringArrayList(PickConfig.EXTRA_IMAGES_PATH_ASSETS);
+        }
 
     }
 
