@@ -4,11 +4,11 @@
     <color name="actionbar_color_dark">#455A64</color>
 
     <!--uCrop Activity-->
-    <color name="ucrop_color_toolbar">#FF6E40</color>
-    <color name="ucrop_color_statusbar">#CC5833</color>
+    <color name="ucrop_color_toolbar">#1D99FF</color>
+    <color name="ucrop_color_statusbar">#258be2</color>
     <color name="ucrop_color_title">#fff</color>
     <color name="ucrop_color_widget">#000</color>
-    <color name="ucrop_color_widget_active">#FF6E40</color>
+    <color name="ucrop_color_widget_active">#1D99FF</color>
     <color name="ucrop_color_widget_background">#fff</color>
     <color name="ucrop_color_widget_text">#000</color>
     <color name="ucrop_color_progress_wheel_line">#808080</color>
@@ -19,8 +19,8 @@
     <color name="ucrop_color_default_crop_frame">#ffffff</color>
     <color name="ucrop_color_default_dimmed">#8c000000</color>
 
-    <color name="colorMainEE">#e0f08300</color>
-    <color name="colorMain">#f08300</color>
+    <color name="colorMainEE">#258be2</color>
+    <color name="colorMain">#1D99FF</color>
 
 
 </resources>

@@ -108,8 +108,8 @@ public class PickConfig {
         private boolean isneed_camera = true;
         private ArrayList<String> imageses;
         private boolean isSqureCrop = false;
-        private int actionBarcolor = Color.parseColor("#03A9F4");
-        private int statusBarcolor = Color.parseColor("#0288D1");
+        private int actionBarcolor;
+        private int statusBarcolor;
 
         private UCrop.Options options = null;
 

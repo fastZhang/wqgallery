@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class CacheUtils {
 
-    public static final String PATH_HEADER = Environment.getExternalStorageDirectory().getAbsolutePath() + "/com.zcl.showphone/";
+    public static final String PATH_HEADER = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "com.funny.call.prank.you" + "/";
 
     /**
      * 裁剪临时文件

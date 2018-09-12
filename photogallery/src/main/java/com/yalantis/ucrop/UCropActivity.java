@@ -230,9 +230,9 @@ public class UCropActivity extends AppCompatActivity {
     private void setupViews() {
         Bundle optionsBundle = getIntent().getBundleExtra(UCrop.EXTRA_OPTIONS);
 
-        mStatusBarColor = optionsBundle.getInt(UCrop.Options.EXTRA_STATUS_BAR_COLOR, Color.parseColor("#0288D1"));
-        mToolbarColor = optionsBundle.getInt(UCrop.Options.EXTRA_TOOL_BAR_COLOR, Color.parseColor("#03A9F4"));
-        mActiveWidgetColor = optionsBundle.getInt(UCrop.Options.EXTRA_UCROP_COLOR_WIDGET_ACTIVE, Color.parseColor("#FF6E40"));
+        mStatusBarColor = optionsBundle.getInt(UCrop.Options.EXTRA_STATUS_BAR_COLOR, getResources().getColor(R.color.ucrop_color_statusbar));
+        mToolbarColor = optionsBundle.getInt(UCrop.Options.EXTRA_TOOL_BAR_COLOR, getResources().getColor(R.color.ucrop_color_toolbar));
+        mActiveWidgetColor = optionsBundle.getInt(UCrop.Options.EXTRA_UCROP_COLOR_WIDGET_ACTIVE, getResources().getColor(R.color.ucrop_color_widget_active));
         mToolbarTextColor = optionsBundle.getInt(UCrop.Options.EXTRA_UCROP_TITLE_COLOR_TOOLBAR, Color.parseColor("#ffffff"));
 
         setupAppBar();
