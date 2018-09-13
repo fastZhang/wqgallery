@@ -47,7 +47,7 @@ public class PickConfig {
     private int maxPickSize;
     private boolean isneedcrop;
     private boolean isneedcamera;
-    private ArrayList<String> imageses;
+    private List<String> imageses;
     private int actionBarcolor;
     private int statusBarcolor;
     private UCrop.Options options;
@@ -77,7 +77,7 @@ public class PickConfig {
         bundle.putInt(EXTRA_MAX_SIZE, this.maxPickSize);
         bundle.putBoolean(EXTRA_IS_NEED_CAMERA, this.isneedcamera);
 
-        bundle.putStringArrayList(EXTRA_IMAGES_PATH_ASSETS, this.imageses);
+        bundle.putStringArrayList(EXTRA_IMAGES_PATH_ASSETS, (ArrayList<String>) this.imageses);
 
         bundle.putBoolean(EXTRA_IS_NEED_CROP, this.isneedcrop);
         bundle.putBoolean(EXTRA_IS_SQUARE_CROP, this.isSqureCrop);
@@ -106,7 +106,7 @@ public class PickConfig {
         private int maxPickSize = DEFAULT_PICKSIZE;
         private boolean isneed_crop = false;
         private boolean isneed_camera = true;
-        private ArrayList<String> imageses;
+        private List<String> imageses;
         private boolean isSqureCrop = false;
         private int actionBarcolor;
         private int statusBarcolor;
@@ -180,7 +180,7 @@ public class PickConfig {
             return this;
         }
 
-        public PickConfig.Builder setImagesPathFromAssets(ArrayList<String> imageses) {
+        public PickConfig.Builder setImagesPathFromAssets(List<String> imageses) {
             this.imageses = imageses;
             return this;
         }
