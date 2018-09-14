@@ -5,12 +5,11 @@ def rootExt = rootProject.ext
 
 
 android {
-    compileSdkVersion globalConfiguration.getAt("compileSdkVersion")
-    buildToolsVersion globalConfiguration.getAt("buildToolsVersion")
+    compileSdkVersion compileSdkVersionInt
 
     defaultConfig {
         minSdkVersion libMinSdkVersion
-        targetSdkVersion rootExt.targetSdkVersion
+        targetSdkVersion rootExt.targetSdkVersionInt
 
         versionCode 7
         versionName "3.1.1"
